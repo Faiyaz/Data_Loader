@@ -7,64 +7,64 @@
 
 <table class='table table-bordered table-hover table-condensed table-responsive'>
     <tr>
-    <th class="info">ID</th>
-    <?php foreach ($columns as $key => $column): ?>
-        <th class="info">
-            <?php echo strtoupper($column); ?>
-        </th>
-    <?php endforeach ?>
-    </tr>
-    <?php for ($i=0; $i < count($rows); $i++): ?>
-    <tr>
-        <?php foreach ($rows[$i] as $key => $row): ?>
-                <?php if ($key == 0): ?>
-                    <?php 
-                        $touch = strtoupper($row);
-                        $stmt->bindParam(1, $touch);
-                        $stmt->execute();
-                        $data = $stmt->fetch(PDO::FETCH_OBJ);
-                        if ($data) {
-                            $good_tickers[$name][] = $touch;
-                           echo "<td><span class='text-success'>" . $data->id . "</span></td>";
-                           echo "<td><span class='text-success'>$touch</span></td>";
-                        } else {
-                            $bad_tickers[$name][] = $touch;
-                            echo "<td class='danger'><span class='text-danger'>NOT FOUND</span></td>";
-                            echo "<td class='danger'><span class='text-danger'>$touch</span></td>";
-                        }
-                    ?>
-                <?php else: ?>
-                     <?php echo "<td>$row</td>"; ?>
-                <?php endif ?>
+        <?php foreach ($db_columns as $key => $column): ?>
+            <th class="info">
+                <?php echo strtoupper($column); ?>
+            </th>
         <?php endforeach ?>
     </tr>
+    <?php for ($i=0; $i < $rows_per_file; $i++): ?>
+        <?php 
+            $bind = strtoupper($clmn['ticker'][$i]);
+            $stmt_check_ticker->bindParam(1, $bind);
+            $stmt_check_ticker->execute();
+            $ticker = $stmt_check_ticker->fetch(PDO::FETCH_OBJ); 
+        ?>
+        <tr <?php echo (!$ticker) ? "class='danger'" : null;?>>
+            <td><?php echo $batch_name; ?></td>
+            <?php if ($ticker): ?>
+                <?php $matched_tickers1[$name][] = $clmn['ticker'][$i]; ?>
+                <td><span class='text-success'><?php echo $ticker->id; ?></span></td>
+            <?php else: ?>
+                <?php $unmatched_tickers1[$name][] = $clmn['ticker'][$i]; ?>
+                <td><span class='text-danger'><?php echo strtoupper($clmn['ticker'][$i]); ?></span></td>
+            <?php endif ?>
+            <?php if ($table == 'probability'): ?>
+                <td><?php echo $clmn['prob'][$i]; ?></td>
+                <td><?php echo $clmn['avgmove'][$i]; ?></td>
+                <td><?php echo $clmn['stddev'][$i]; ?></td>
+                <td><?php echo $clmn['signal_to_noise'][$i]; ?></td>
+                <td><?php echo $type; ?></td>
+                <td><?php echo $up; ?></td>
+            <?php else: ?>
+                <td><?php echo $clmn['zscore'][$i]; ?></td>
+                <td><?php echo $abnormal; ?></td>
+            <?php endif ?>
+        </tr>
     <?php endfor ?>
 </table>
 
-<?php 
-
-    $total_good = (isset($good_tickers[$name])) ? count($good_tickers[$name]) : '';
-    $total_bad = (isset($bad_tickers[$name])) ? count($bad_tickers[$name]) : '';
+<?php
+    $matched = (isset($matched_tickers1[$name])) ? $matched_tickers1[$name] : '';
+    $unmatched = (isset($unmatched_tickers1[$name])) ? $unmatched_tickers1[$name] : '';
 ?>
 <div class="row">
     <div class="col-md-4 col-md-offset-8">
         <div class="alert alert-info">
             <p class="lead ">File process complete</p>
             <p><span class="glyphicon glyphicon-ok text-success"></span> File: <?php echo "$name.tsv"; ?></p>
-            <p><span class="glyphicon glyphicon-ok text-success"></span> Total tickers: <?php echo $total_rows; ?></p>
-            <?php if (!empty($total_good)): ?>
-                <p><span class="glyphicon glyphicon-ok text-success"></span> Matched tickers: <?php echo $total_good; ?></p>
+            <p><span class="glyphicon glyphicon-ok text-success"></span> Total tickers: <?php echo $rows_per_file; ?></p>
+            <?php if (!empty($matched)): ?>
+                <p><span class="glyphicon glyphicon-ok text-success"></span> Matched tickers: <?php echo count($matched); ?></p>
             <?php else: ?>
                 <p><span class="glyphicon glyphicon-remove text-danger"></span> Matched tickers: 0</p>
             <?php endif ?>
 
-            <?php if (!empty($total_bad)): ?>
-                <p><span class="glyphicon glyphicon-remove text-danger"></span> Missing tickers: <?php echo $total_bad; ?></p>
+            <?php if (!empty($unmatched)): ?>
+                <p><span class="glyphicon glyphicon-remove text-danger"></span> Missing tickers: <?php echo count($unmatched); ?></p>
             <?php else: ?>
                 <p><span class="glyphicon glyphicon-ok text-success"></span> Missing tickers: 0</p>
             <?php endif ?>
         </div>
     </div>
 </div>
-
-

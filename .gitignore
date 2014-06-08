@@ -1,4 +1,7 @@
+/log
 /vendor
+/public/ticker.php
+/public/ticker_setup.php
 composer.phar
 config.php
 Thumbs.db

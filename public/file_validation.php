@@ -28,13 +28,9 @@ if (!empty($_FILES) && isset($_FILES['data'])) {
 
                     // if the above validation was successful 
                     if (isset($f_i) and count($f_i) == count($filenames_array)) {
-                        //$_SESSION['success'] = "File <strong>$zip_name</strong> was successfuly processed. <br/><br/>";
-                        //$_SESSION['success'] .= "Data extracted from the following <strong>" . count($good_files) . "</strong> TSV files:<br/>";
-                        //$_SESSION['success'] .= implode("<br/>", $good_files);
-                        require 'info.php';
+                        //require 'info.php';
                         require 'db.php';
                     } else { 
-                        $bad_file_tree = implode("<br/>", $bad_files);
                         $_SESSION['error_msg'] = "Sorry, unable to match one or more .tsv files.<br/> 
                         <strong>Files inside nested directory are ignored.</strong><hr/>
                         <strong>$zip_name</strong> contains the following: <br/>"

@@ -42,22 +42,26 @@
     <body>
         <div class="container">
             <div class="page-header">
-                <h1 class="text-center">Data tester <small>from .zip to DB</small></h1>
+                <h1 class="text-center">Data Loader <small>from .zip to DB</small></h1>
+                <p class="text-center text-primary">Currently supports zip compressed TSV files ONLY</p>
             </div>
             <!-- FORM to get the TSV data -->
             <div class="row">
               <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-info">
-                  <div class="panel-heading">Please test with zipped TSV files</div>
+                  <div class="panel-heading">Dry run is default. To commit, box must be unchecked.</div>
                     <div class="panel-body">
                       <form class="form-inline" role="form" action="/" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="data">.zip extension only</label>
+                            <label for="data">Please select a zip file</label>
                             <input type="file" id="data" name="data">
                         </div>
-                        <div class="pull-right">
-                          <button type="submit" class="btn btn-lg btn-primary">Run test</button>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" id="dry" value="dry" name="dry" checked="checked"> Dry run
+                          </label>
                         </div>
+                        <button type="submit" class="btn btn-lg btn-primary">Load</button>
                       </form>
                     </div>
                   </div>
@@ -67,9 +71,32 @@
             <?php if (isset($_SESSION['error_msg'])): ?>
               <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                  <div class="alert alert-danger">
+                  <div id="alert" class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <p><?php echo $_SESSION['error_msg']; ?></p>
                     <?php unset($_SESSION['error_msg']); ?>
+                  </div>
+                </div>
+              </div>
+            <?php endif ?>
+
+            <?php if (isset($_SESSION['success'])): ?>
+              <div class="row">
+                <div id="alert" class="col-md-6 col-md-offset-3">
+                  <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <p><?php echo $_SESSION['success']; ?></p>
+                    <hr>
+                    <?php if (isset($_SESSION['log_error'])): ?>
+                      <p class="text-danger"><strong>Logging:</strong> <?php echo $_SESSION['log_error']; ?></p>
+                      <?php unset($_SESSION['log_error']); ?>
+                    <?php endif ?>
+
+                    <?php if (isset($_SESSION['log_success'])): ?>
+                      <p class="text-success"><strong>Logging:</strong> <?php echo $_SESSION['log_success']; ?></p>
+                      <?php unset($_SESSION['log_success']); ?>
+                    <?php endif ?>
+                    <?php unset($_SESSION['success']); ?>
                   </div>
                 </div>
               </div>
