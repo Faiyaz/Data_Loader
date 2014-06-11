@@ -1,3 +1,3 @@
-## Data Tester
+## Data Loader
 
-Testing file based data before database loading
+Testing and loading compressed TSV data files into RDBMS
