@@ -27,14 +27,10 @@ if (!empty($_FILES) && isset($_FILES['data'])) {
                     }  
 
                     // if the above validation was successful 
-                    if (isset($f_i) and count($f_i) == count($filenames_array)) {
-                        //require 'info.php';
+                    if (isset($f_i) and count($f_i) >= 4) {
                         require 'db.php';
                     } else { 
-                        $_SESSION['error_msg'] = "Sorry, unable to match one or more .tsv files.<br/> 
-                        <strong>Files inside nested directory are ignored.</strong><hr/>
-                        <strong>$zip_name</strong> contains the following: <br/>"
-                        . implode("<br/>", $bad_files);
+                        $_SESSION['error_msg'] = "Sorry, unable to match one or more .tsv files.";
                         redirect('/');
                     }
 

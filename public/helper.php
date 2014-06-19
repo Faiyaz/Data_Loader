@@ -2,6 +2,9 @@
 // Start  the session
 session_start();
 
+// Create the log 
+//$log = [];
+
 // Helpful redirect function
 function redirect($location) {
     header("Location: $location");
