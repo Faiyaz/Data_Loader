@@ -49,7 +49,7 @@
             <div class="row">
               <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-info">
-                  <div class="panel-heading">Dry run is default. To commit, box must be unchecked.</div>
+                  <div class="panel-heading">For Testing ONLY, please select Dry Run.</div>
                     <div class="panel-body">
                       <form class="form-inline" role="form" action="/" method="post" enctype="multipart/form-data">
                         <div class="form-group">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" id="dry" value="dry" name="dry" checked="checked"> Dry run
+                            <input type="checkbox" id="dry" value="dry" name="dry"> Dry run
                           </label>
                         </div>
                         <button type="submit" class="btn btn-lg btn-primary">Load</button>
