@@ -1,6 +1,6 @@
-<?php 
+<?php
 // Set the batch name
-$batch_name = batch_name($zip_name); 
+$batch_name = batch_name($zip_name);
 
 // Check if the batch (zip file name), already exists in the database
 $stmt_check_batch = $dbh->prepare("SELECT id, name FROM batch where name = ?");
@@ -19,8 +19,9 @@ if ($result_obj) {
     // 1. Verify if all data tickers exists in the database
 
     // Check if all the ticker symbol from all the data file exists in the ticker table
-    $stmt_check_ticker = $dbh->prepare("SELECT id FROM ticker where ticker_symbol = ?");
-    // Get Data Type daily, weekly, monthly (only for Probability table) 
+    $stmt_check_ticker = $dbh->prepare("SELECT id FROM ticker where symbol = ?");
+
+    // Get Data Type daily, weekly, monthly (only for Probability table)
     $stmt_get_data_type_id = $dbh->prepare("SELECT id FROM data_type where name = ?");
 
     // Loop through each file get each of their name and content
@@ -34,7 +35,7 @@ if ($result_obj) {
             $bind = data_info($name)['type'];
             $stmt_get_data_type_id->bindParam(1, $bind);
             $stmt_get_data_type_id->execute();
-            $type_obj = $stmt_get_data_type_id->fetch(PDO::FETCH_OBJ); 
+            $type_obj = $stmt_get_data_type_id->fetch(PDO::FETCH_OBJ);
             $type = $type_obj->id;
         }
 
@@ -42,14 +43,14 @@ if ($result_obj) {
         $abnormal = (isset(data_info($name)['abnormal'])) ? data_info($name)['abnormal'] : null;
         // Down trend or up trend (only for probability table)
         $up = (isset(data_info($name)['trend'])) ? data_info($name)['trend'] : null;
-        // Grab the unprocessed string of file content 
+        // Grab the unprocessed string of file content
         $content = strtolower($zip->getFromIndex($i)); // String
         // Process the content, get only the column headers into an array
         $columns = get_data($name, $content, 'column'); // Array
 
 
         $db_columns = ($table === 'probability') ? $probability_columns: $zscore_columns;
-        // Process the content, get all the datas and store them as multidimensional array (one array per row) 
+        // Process the content, get all the datas and store them as multidimensional array (one array per row)
         $rows =  get_data($name, $content, 'row'); // Array
         // Count the total number of arrays (rows of data) per file
         $rows_per_file =  count($rows); // Int
@@ -74,9 +75,9 @@ if ($result_obj) {
                 // Setup the contents for SQL INSERT
                 if ($table == 'probability') {
                     $p_vlu[] = [
-                        $ticker_id, 
-                        $clmn['prob'][$i], 
-                        $clmn['avgmove'][$i], 
+                        $ticker_id,
+                        $clmn['prob'][$i],
+                        $clmn['avgmove'][$i],
                         $clmn['stddev'][$i],
                         $clmn['signal_to_noise'][$i],
                         $type,
@@ -84,11 +85,11 @@ if ($result_obj) {
                     ];
                 } else { // 'zscore' table
                     $z_vlu[] = [
-                        $ticker_id, 
-                        $clmn['zscore'][$i], 
+                        $ticker_id,
+                        $clmn['zscore'][$i],
                         $abnormal
                     ];
-                } 
+                }
             } else {
                 $tickers_um = (!isset($tickers_um)) ? [] : $tickers_um;
                 array_push($tickers_um, $clmn['ticker'][$i]);
@@ -109,7 +110,7 @@ if (!isset($_POST['dry'])) {
     // Compare the total number of rows vs total number of matched rows
     if ( isset($tickers_m) and array_sum($all_rows) == (count($tickers_m)) ) {
         require 'db_insert.php';
-        
+
     } elseif ( isset($tickers_um) ) {
         $_SESSION['error_msg'] = "FAIL! A total of " . count($tickers_um) . " unidentified Tickers found<hr/>";
         $_SESSION['error_msg'] .= strtoupper(implode(", ", (array_unique($tickers_um))));

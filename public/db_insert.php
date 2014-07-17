@@ -1,8 +1,8 @@
-<?php
+    <?php
 // 1. Start the transaction
 $dbh->beginTransaction();
 
-// 2. Insert the batch name (zip file name = 'date') 
+// 2. Insert the batch name (zip file name = 'date')
 $stmt_insert_batch = $dbh->prepare("INSERT INTO `GS_DATA_TEST`.batch (name) VALUES (?)");
 $stmt_insert_batch->bindParam(1, $batch_name); // bind the parameter with the zip name value
 $stmt_insert_batch->execute(); // Execute the insert statement
@@ -41,4 +41,4 @@ foreach ($zscore_values as $value) { // Zscore table
 // 8. Commit the transaction
 if ($dbh->commit()) {
     require 'success.php';
-} 
+}
