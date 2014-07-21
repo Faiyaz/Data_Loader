@@ -1,10 +1,12 @@
-    <?php
+<?php
 // 1. Start the transaction
 $dbh->beginTransaction();
 
 // 2. Insert the batch name (zip file name = 'date')
-$stmt_insert_batch = $dbh->prepare("INSERT INTO `GS_DATA_TEST`.batch (name) VALUES (?)");
+$stmt_insert_batch = $dbh->prepare("INSERT INTO `{$config['DB_NAME']}`.batch (name, created_at, updated_at) VALUES (?,?,?)");
 $stmt_insert_batch->bindParam(1, $batch_name); // bind the parameter with the zip name value
+$stmt_insert_batch->bindParam(2, $time); // bind the parameter with current time
+$stmt_insert_batch->bindParam(3, $time); // bind the parameter with current time
 $stmt_insert_batch->execute(); // Execute the insert statement
 $last_insert_batch_id = $dbh->lastInsertId(); // get the id
 
@@ -24,8 +26,8 @@ foreach ($z_vlu as $value) { // Zscore table
 }
 
 // 5. Create the INSERT statements
-$p_sql = "INSERT INTO `GS_DATA_TEST`.probability (" . implode(', ', $probability_columns) . ") VALUES (" . implode(', ', $p_qs) . ")";
-$z_sql = "INSERT INTO `GS_DATA_TEST`.zscore (" . implode(', ', $zscore_columns) . ") VALUES (" . implode(', ', $z_qs) . ")";
+$p_sql = "INSERT INTO `{$config['DB_NAME']}`.probability (" . implode(', ', $probability_columns) . ") VALUES (" . implode(', ', $p_qs) . ")";
+$z_sql = "INSERT INTO `{$config['DB_NAME']}`.zscore (" . implode(', ', $zscore_columns) . ") VALUES (" . implode(', ', $z_qs) . ")";
 $stmt_insert_probability = $dbh->prepare($p_sql);
 $stmt_insert_zscore = $dbh->prepare($z_sql);
 

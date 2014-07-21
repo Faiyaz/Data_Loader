@@ -1,4 +1,8 @@
 <?php
+
+// Set the time
+$time = date('Y-m-d H:i:s');
+
 // Set the batch name
 $batch_name = batch_name($zip_name);
 
@@ -47,9 +51,6 @@ if ($result_obj) {
         $content = strtolower($zip->getFromIndex($i)); // String
         // Process the content, get only the column headers into an array
         $columns = get_data($name, $content, 'column'); // Array
-
-
-        $db_columns = ($table === 'probability') ? $probability_columns: $zscore_columns;
         // Process the content, get all the datas and store them as multidimensional array (one array per row)
         $rows =  get_data($name, $content, 'row'); // Array
         // Count the total number of arrays (rows of data) per file
@@ -98,6 +99,8 @@ if ($result_obj) {
 
         // Turns on when Dry run is set
         if (isset($_POST['dry']) && $_POST['dry'] == 'dry') {
+            // Set the columns based on the match
+            $db_columns = ($table === 'probability') ? $probability_columns: $zscore_columns;
             require 'table.php';
         }
     }

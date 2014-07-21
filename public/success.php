@@ -5,7 +5,7 @@ $_SESSION['success'] = "<h4>Success!!!</h4>";
 $_SESSION['success'] .= "<p><strong>$zip_name</strong> was successfully processed.</p><hr/>";
 $_SESSION['success'] .= "<h5>Process breakdown:</h5>";
 foreach (breakdown($good_files, $all_rows) as $key => $value) {
-    $_SESSION['success'] .= "<p><span class='glyphicon glyphicon-ok text-success'></span> $key: <strong>$value</strong> rows</p>"; 
+    $_SESSION['success'] .= "<p><span class='glyphicon glyphicon-ok text-success'></span> $key: <strong>$value</strong> rows</p>";
     $make_log['files'][] = ['name' => $key, 'total_rows' => $value, 'table' => get_table(file_name($key))];
 }
 $_SESSION['success'] .= "<hr/><h5>Summary:</h5>";
@@ -27,10 +27,10 @@ $make_log['process_info']['zscore_rows'] = count($z_vlu);
 $json_log = json_encode($make_log);
 $jsonfile = "processed_" . file_name($zip_name) . ".json";
 
-if (is_writable($config['log_dir'])) {
-    $files = scandir($config['log_dir']);
+if (is_writable($config['LOG_DIR'])) {
+    $files = scandir($config['LOG_DIR']);
     if (!in_array($jsonfile, $files)) {
-        $handle = fopen($config['log_dir'].$jsonfile, 'x');
+        $handle = fopen($config['LOG_DIR'].$jsonfile, 'x');
         fwrite($handle, $json_log);
         fclose($handle);
         $_SESSION['log_success'] = "File <strong>$jsonfile</strong> created.";
