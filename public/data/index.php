@@ -7,7 +7,7 @@
         </p>
     </div>
 
-    <?php require_once '../message.php'; ?>
+    <?php require_once 'public/message.php'; ?>
 
-    <?php require_once '../data_view.php'; ?>
-<?php require '../include/footer.php'; ?>
+    <?php require_once 'public/data_view.php'; ?>
+<?php require 'public/include/footer.php'; ?>

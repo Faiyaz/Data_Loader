@@ -2,6 +2,9 @@
 // Start  the session
 session_start();
 
+// Set the config
+$config = require 'config.php';
+
 // Create the log 
 //$log = [];
 

@@ -1,5 +1,5 @@
 <?php
-require '../db.php';
+require 'public/db.php';
 
 $stmt_get_batches = $dbh->query("SELECT name, created_at FROM batch");
 $stmt_get_batches->execute(); // Execute the SQL
@@ -37,9 +37,9 @@ $batch_total = count($result_objs);
 
                     <div id="<?php echo $batch->name; ?>" class="collapse">
                         <?php
-                        if (file_exists($filename = "../../log/processed_" . return_name($batch->name) . ".json"))
+                        if (file_exists($filename = "log/processed_" . return_name($batch->name) . ".json"))
                         {
-                            $log_objs = json_decode(file_get_contents("../../log/processed_" . return_name($batch->name) . ".json"));
+                            $log_objs = json_decode(file_get_contents("log/processed_" . return_name($batch->name) . ".json"));
                             $files_objs = $log_objs->files;
                             $process_info_obj = $log_objs->process_info;
                             $total_files_objs = count($files_objs);

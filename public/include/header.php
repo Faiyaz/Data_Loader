@@ -1,5 +1,13 @@
-<?php $config = require '/Library/WebServer/www/gordiansignal.com/test/GS_data/config.php'; ?>
-<?php require_once __DIR__.'/helper.php'; ?>
+<?php
+$pos = strpos($_SERVER['SCRIPT_NAME'], 'data');
+if ($pos !== false) // data page
+{
+    chdir('../..'); // Makes current directory into the application root
+} else { // home page
+    chdir('..'); // Makes current directory into the application root
+}
+?>
+<?php require_once 'helper.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
