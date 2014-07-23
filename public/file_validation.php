@@ -28,6 +28,7 @@ if (!empty($_FILES) && isset($_FILES['data'])) {
 
                     // if the above validation was successful 
                     if (isset($f_i) and count($f_i) >= 4) {
+                        $option_db = "data_validation";
                         require 'db.php';
                     } else { 
                         $_SESSION['error_msg'] = "Sorry, unable to match one or more .tsv files.";

@@ -2,6 +2,9 @@
 // 1. Start the transaction
 $dbh->beginTransaction();
 
+// Set the time for timestamp fields
+$time = date('Y-m-d H:i:s');
+
 // 2. Insert the batch name (zip file name = 'date')
 $stmt_insert_batch = $dbh->prepare("INSERT INTO `{$config['DB_NAME']}`.batch (name, created_at, updated_at) VALUES (?,?,?)");
 $stmt_insert_batch->bindParam(1, $batch_name); // bind the parameter with the zip name value
@@ -40,7 +43,10 @@ foreach ($zscore_values as $value) { // Zscore table
     $stmt_insert_zscore->execute($value);
 }
 
-// 8. Commit the transaction
+// 8. Commit the transaction or set fail to trigger rollback
 if ($dbh->commit()) {
     require 'success.php';
+} else {
+    $commit_fail = true;
 }
+

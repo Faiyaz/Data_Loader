@@ -78,6 +78,11 @@ function batch_name($value) {
     return str_replace("_", "-", $array[0]);
 }
 
+// replace '-', with '_'
+function return_name($value) {
+    return str_replace("-", "_", $value);
+}
+
 // Split the file name with '_', and get the table name value
 function get_table($filename) { 
     $array = explode("_", $filename);

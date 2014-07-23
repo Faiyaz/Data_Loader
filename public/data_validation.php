@@ -1,8 +1,5 @@
 <?php
 
-// Set the time
-$time = date('Y-m-d H:i:s');
-
 // Set the batch name
 $batch_name = batch_name($zip_name);
 
