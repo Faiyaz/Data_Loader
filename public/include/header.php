@@ -1,12 +1,4 @@
-<?php
-$pos = strpos($_SERVER['SCRIPT_NAME'], 'data');
-if ($pos !== false) // data page
-{
-    chdir('../..'); // Makes current directory into the application root
-} else { // home page
-    chdir('..'); // Makes current directory into the application root
-}
-?>
+<?php chdir('..'); // Needed to include files from previous directory ?>
 <?php require_once 'helper.php'; ?>
 <!DOCTYPE html>
 <html lang="en">

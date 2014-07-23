@@ -3,7 +3,7 @@
         <h1 class="text-center">Data Loader <small>from .zip to DB</small></h1>
         <p class="lead text-center text-info">Currently supports zip compressed TSV files ONLY</p>
         <p class="text-center">
-            <a href="/data" class="text- active">Click here to view Database</a>
+            <a href="/data.php" class="text- active">Click here to view Database</a>
         </p>
     </div>
 
