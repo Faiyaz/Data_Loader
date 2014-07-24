@@ -27,7 +27,6 @@ $make_log['process_info']['zscore_rows'] = count($z_vlu);
 $json_log = json_encode($make_log);
 $jsonfile = "processed_" . file_name($zip_name) . ".json";
 
-echo getcwd();
 if (is_writable($config['LOG_DIR'])) {
     $files = scandir($config['LOG_DIR']);
     if (!in_array($jsonfile, $files)) {

@@ -46,17 +46,17 @@ $batch_total = count($result_objs);
 
                             //var_dump($process_info_obj);
                             echo "<ul class='list-unstyled'>";
-                            echo "<li>Submitted by IP: <strong class='text-primary'>$process_info_obj->user_ip</strong></li>";
-                            echo "<li>Batch added on: <strong class='text-primary'>$process_info_obj->added_on</strong></li>";
-                            echo "<li>Total files submitted: <strong class='text-primary'>$total_files_objs</strong></li>";
-                            echo "<li><ul>";
-                            foreach ($files_objs as $file) {
-                                echo "<li>File <strong class='text-primary'>" . $file->name . "</strong> with <strong class='text-primary'>{$file->total_rows}</strong> rows of data</li>";
-                            }
-                            echo "</li></ul>";
-                            echo "<li>Total rows of data copied: <strong class='text-primary'>" . $process_info_obj->total_rows . "</strong></li>";
-                            echo "<li>Total rows of data for probability table: <strong class='text-primary'>" . $process_info_obj->probability_rows . "</strong></li>";
-                            echo "<li>Total rows of data for zscore table: <strong class='text-primary'>" . $process_info_obj->zscore_rows . "</strong></li>";
+                                echo "<li>Submitted by IP: <strong class='text-primary'>$process_info_obj->user_ip</strong></li>";
+                                echo "<li>Batch added on: <strong class='text-primary'>$process_info_obj->added_on</strong></li>";
+                                echo "<li>Total files submitted: <strong class='text-primary'>$total_files_objs</strong></li>";
+                                echo "<li><ul>";
+                                foreach ($files_objs as $file) {
+                                    echo "<li>File <strong class='text-primary'>" . $file->name . "</strong> with <strong class='text-primary'>{$file->total_rows}</strong> rows of data</li>";
+                                }
+                                echo "</li></ul>";
+                                echo "<li>Total rows of data for zscore table: <strong class='text-primary'>" . $process_info_obj->zscore_rows . "</strong></li>";
+                                echo "<li>Total rows of data for probability table: <strong class='text-primary'>" . $process_info_obj->probability_rows . "</strong></li>";
+                                echo "<li>Total rows of data copied: <strong class='text-primary'>" . $process_info_obj->total_rows . "</strong></li>";
                             echo "</ul>";
                         } else {
                             echo "Unable to locate a log file";
