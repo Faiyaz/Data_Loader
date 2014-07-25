@@ -30,12 +30,12 @@ $batch_total = count($result_objs);
                 <td><?php echo $batch->name; ?></td>
                 <td>
                     <p>
-                        <a data-toggle="collapse" data-target="#<?php echo $batch->name; ?>">
+                        <a href="#" class="null">
                             Click to Toggle view
                         </a>
                     </p>
 
-                    <div id="<?php echo $batch->name; ?>" class="collapse">
+                    <div class="collapse" >
                         <?php
                         if (file_exists($filename = "log/processed_" . return_name($batch->name) . ".json"))
                         {

@@ -11,6 +11,13 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <!-- Custom Javascript -->
-<script>$('.message').delay("3500").slideUp("slow");</script>
+<script>
+    $('.message').delay("3500").slideUp("slow");
+    $('.null').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).closest('td').find('.collapse').collapse('toggle');
+    });
+</script>
 </body>
 </html>
